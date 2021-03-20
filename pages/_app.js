@@ -1,7 +1,12 @@
+import Layout from "../components/layout/layout";
 import "../styles/app.css";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
-}
+const MyApp = ({ Component, pageProps }) => {
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
+};
 
 export default MyApp;
