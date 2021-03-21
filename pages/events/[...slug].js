@@ -13,9 +13,9 @@ const FilteredEvents = () => {
 
   if (!filterData) {
     return (
-      <center>
+      <div className="full-page">
         <p>Loading ...</p>
-      </center>
+      </div>
     );
   }
 
