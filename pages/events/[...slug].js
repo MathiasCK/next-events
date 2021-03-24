@@ -2,10 +2,11 @@ import { url } from "../../utils/api-utils";
 import EventList from "../../components/events/Event-list";
 import ResultsTitle from "../../components/events/results-title";
 import Button from "../../components/ui/button/Button";
-import { useEffect, useRouter, useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 
-const FilteredEvents = (props) => {
+const FilteredEvents = () => {
   const [loadedEvents, setLoadedEvents] = useState();
   const router = useRouter();
 
