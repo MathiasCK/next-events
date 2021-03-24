@@ -3,10 +3,9 @@ import { getFeaturedEvents } from "../utils/api-utils";
 
 const HomePage = (props) => {
   return (
-    <div>
-      {/*<h1>This is a homepage</h1> */}
+    <>
       <EventList items={props.events} />
-    </div>
+    </>
   );
 };
 
@@ -16,6 +15,7 @@ export const getStaticProps = async () => {
     props: {
       events: featuredEvents,
     },
+    revalidate: 1800,
   };
 };
 

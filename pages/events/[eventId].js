@@ -1,34 +1,56 @@
-import { useRouter } from "next/router";
-import { Fragment } from "react";
-import { getEventById } from "../../dummy-data";
-import EventSummary from "../../components/event-detail/event-summary";
-import EventLogistics from "../../components/event-detail/event-logistics";
-import EventContent from "../../components/event-detail/event-content";
+import { getEventById, getFeaturedEvents } from "../../utils/api-utils";
 import ErrorPage from "../404";
 
-const SingeEvent = () => {
-  const router = useRouter();
-  const eventId = router.query.eventId;
-  const event = getEventById(eventId);
+const SingeEvent = (props) => {
+  const event = props.selectedEvent;
 
   if (!event) {
-    return <ErrorPage />;
+    return (
+      <div className="full-page">
+        <p>Loading ...</p>
+      </div>
+    );
   }
 
   return (
-    <Fragment>
-      <EventSummary title={event.title} />
-      <EventLogistics
-        date={event.date}
-        location={event.location}
-        image={event.image}
-        imageAlt={event.title}
-      />
-      <EventContent>
-        <p>{event.description}</p>
-      </EventContent>
-    </Fragment>
+    <div className="container">
+      <h1>{event.title}</h1>
+      <div>
+        <p>{event.date}</p>
+        <p>{event.location}</p>
+        <center>
+          <div className="image">
+            <img src={`/${event.image}`} />
+          </div>
+        </center>
+      </div>
+      <p>{event.description}</p>
+    </div>
   );
+};
+
+export const getStaticProps = async (context) => {
+  const eventId = context.params.eventId;
+
+  const event = await getEventById(eventId);
+
+  return {
+    props: {
+      selectedEvent: event,
+    },
+    revalidate: 30,
+  };
+};
+
+export const getStaticPaths = async () => {
+  const events = await getFeaturedEvents();
+  const paths = events.map((event) => ({
+    params: { eventId: event.id },
+  }));
+  return {
+    paths: paths,
+    fallback: true,
+  };
 };
 
 export default SingeEvent;
