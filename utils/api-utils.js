@@ -1,4 +1,4 @@
-const url =
+export const url =
   "https://nextjs-course-4453b-default-rtdb.europe-west1.firebasedatabase.app/events.json";
 
 export const getAllEvents = async () => {
