@@ -63,11 +63,12 @@ body h1 {
 
 .container p {
   text-align: center;
+  margin: 2rem 0;
 }
 
 .container .image {
-  width: 50%;
-  height: 100%;
+  width: 600px;
+  height: 400px;
   padding: 1rem 0;
 }
 

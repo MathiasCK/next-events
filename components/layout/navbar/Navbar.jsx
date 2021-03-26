@@ -11,7 +11,9 @@ const Navbar = () => {
       <nav className={classes.navigation}>
         <ul>
           <li>
-            <Link href="/events">Browse All Events</Link>
+            <center>
+              <Link href="/events">Browse All Events</Link>
+            </center>
           </li>
         </ul>
       </nav>

@@ -49,10 +49,11 @@ body {
   }
   p {
     text-align: center;
+    margin: 2rem 0;
   }
   & .image {
-    width: 50%;
-    height: 100%;
+    width: 600px;
+    height: 400px;
     padding: 1rem 0;
     img {
       width: 100%;
