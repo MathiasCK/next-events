@@ -9,8 +9,8 @@ const NewComment = (props) => {
   const nameInputRef = useRef();
   const commentInputRef = useRef();
 
-  function sendCommentHandler(event) {
-    event.preventDefault();
+  const sendCommentHandler = (e) => {
+    e.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
     const enteredName = nameInputRef.current.value;
@@ -34,26 +34,31 @@ const NewComment = (props) => {
       name: enteredName,
       text: enteredComment,
     });
-  }
+  };
 
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={sendCommentHandler}>
       <div className={classes.row}>
         <div className={classes.control}>
           <label htmlFor="email">Your email</label>
-          <input type="email" id="email" ref={emailInputRef} />
+          <input required type="email" id="email" ref={emailInputRef} />
         </div>
         <div className={classes.control}>
           <label htmlFor="name">Your name</label>
-          <input type="text" id="name" ref={nameInputRef} />
+          <input required type="text" id="name" ref={nameInputRef} />
         </div>
       </div>
       <div className={classes.control}>
         <label htmlFor="comment">Your comment</label>
-        <textarea id="comment" rows="5" ref={commentInputRef}></textarea>
+        <textarea
+          required
+          id="comment"
+          rows="5"
+          ref={commentInputRef}
+        ></textarea>
       </div>
       {isInvalid && <p>Please enter a valid email address and comment!</p>}
-      <Button>Submit</Button>
+      <Button type="submit">Submit</Button>
     </form>
   );
 };

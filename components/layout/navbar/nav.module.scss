@@ -9,6 +9,7 @@
   display: block;
   padding: 1rem 10%;
   height: 10vh;
+  z-index: 100;
   background-color: white;
   @media (min-width: 500px) {
     display: flex;
