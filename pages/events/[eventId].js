@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { getEventById, getFeaturedEvents } from "../../utils/api-utils";
+import Comments from "../../components/inputs/comments";
 
 const SingeEvent = (props) => {
   const event = props.selectedEvent;
@@ -28,6 +29,7 @@ const SingeEvent = (props) => {
         </div>
       </center>
       <p>{event.description}</p>
+      <Comments eventId={event.id} />
     </div>
   );
 };
