@@ -34,6 +34,12 @@ const NewComment = (props) => {
       name: enteredName,
       text: enteredComment,
     });
+
+    alert("Comment succesfull");
+
+    emailInputRef.current.value = "";
+    nameInputRef.current.value = "";
+    commentInputRef.current.value = "";
   };
 
   return (

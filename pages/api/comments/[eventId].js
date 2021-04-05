@@ -1,5 +1,13 @@
-const handler = (req, res) => {
+import { MongoClient } from "mongodb";
+
+const url =
+  "mongodb+srv://MathiasCK:Xtrmck123@nextjsevents.gztjm.mongodb.net/events?retryWrites=true&w=majority";
+
+const handler = async (req, res) => {
   const eventId = req.query.eventId;
+
+  const client = await MongoClient.connect(url);
+
   if (req.method === "POST") {
     // Add serverside validation
     const { email, name, text } = req.body;
@@ -16,18 +24,26 @@ const handler = (req, res) => {
     }
 
     const newComment = {
-      id: Math.random()
-        .toString(36)
-        .replace(/[^a-z]+/g, "")
-        .substr(0, 10),
+      eventId,
       email,
       name,
       text,
     };
 
-    console.log(newComment);
+    const db = client.db();
 
-    res.status(201).json({ message: "Success", comment: newComment });
+    const result = await db.collection("comments").insertOne({
+      event: eventId,
+      userEmail: email,
+      userName: name,
+      userText: text,
+    });
+
+    console.log(result);
+
+    newComment.id = result.insertedId;
+
+    res.status(201).json({ message: "Success", comment: newComment.id });
   }
   if (req.method === "GET") {
     const dummyList = [
@@ -45,6 +61,7 @@ const handler = (req, res) => {
 
     res.status(200).json({ comments: dummyList });
   }
+  client.close();
 };
 
 export default handler;

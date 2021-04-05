@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
 const url =
-  "mongodb+srv://MathiasCK:Xtrmck123@nextjsevents.gztjm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  "mongodb+srv://MathiasCK:Xtrmck123@nextjsevents.gztjm.mongodb.net/events?retryWrites=true&w=majority";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
