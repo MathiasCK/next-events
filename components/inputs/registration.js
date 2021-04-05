@@ -25,6 +25,8 @@ const NewsletterRegistration = () => {
     // fetch user input (state or refs)
     // optional: validate input
     // send valid data to API
+    alert("Signed up!");
+    inputRef.current.value = "";
   };
 
   return (
