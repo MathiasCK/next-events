@@ -61,8 +61,6 @@
   border-radius: 6px;
   background-color: white;
   color: black;
-  -webkit-box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   padding: 1rem;
 }
 
@@ -70,13 +68,14 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: 1rem;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .control {
-  margin-bottom: 0.5rem;
+  margin: 2rem 0;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -91,13 +90,12 @@
   text-align: left;
 }
 
-.control input,
-.control textarea {
+.control input {
   font: inherit;
-  padding: 0.25rem;
-  resize: none;
-  border: 0.5px solid black;
+  padding: 2rem 1rem;
   width: 100%;
+  border: none;
+  border-bottom: 1px solid black;
 }
 
 .newsletter {

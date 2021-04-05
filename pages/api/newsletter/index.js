@@ -1,17 +1,9 @@
-//import fs from "fs";
-//import path from "path";
-//
-//export const buildFilePath = () => {
-//  return path.join(process.cwd(), "data", "newsletter.json");
-//};
-//
-//export const buildFilePathData = (filePath) => {
-//  const fileData = fs.readFileSync(filePath);
-//  const data = JSON.parse(fileData);
-//  return data;
-//};
-//
-const handler = (req, res) => {
+import { MongoClient } from "mongodb";
+
+const url =
+  "mongodb+srv://MathiasCK:Xtrmck123@nextjsevents.gztjm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+const handler = async (req, res) => {
   if (req.method === "POST") {
     const email = req.body.email;
 
@@ -20,27 +12,17 @@ const handler = (req, res) => {
       return;
     }
 
-    console.log(email);
+    const client = await MongoClient.connect(url);
+    const db = client.db();
 
-    /*
+    await db.collection("emails").insertOne({
+      userEmail: email,
+    });
 
-    const newRegistration = {
-      id: Math.random()
-        .toString(36)
-        .replace(/[^a-z]+/g, "")
-        .substr(0, 10),
-      email: email,
-    };
-
-    const filePath = buildFilePath();
-    const data = buildFilePathData(filePath);
-    data.push(newRegistration);
-    fs.writeFileSync(filePath, JSON.stringify(data));*/
+    client.close();
 
     res.status(201).json({ message: "Success!" });
-  } /*else {
-    console.log("error");
-  }*/
+  }
 };
 
 export default handler;
