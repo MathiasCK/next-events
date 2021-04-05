@@ -43,8 +43,8 @@ const Comments = (props) => {
       <button className={classes.btn} onClick={toggleCommentsHandler}>
         {showComments ? "Hide" : "Show"} Comments
       </button>
-      {showComments && <NewComment onAddComment={addCommentHandler} />}
       {showComments && <CommentList items={comments} />}
+      {showComments && <NewComment onAddComment={addCommentHandler} />}
     </section>
   );
 };
