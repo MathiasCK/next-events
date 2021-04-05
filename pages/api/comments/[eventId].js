@@ -46,20 +46,15 @@ const handler = async (req, res) => {
     res.status(201).json({ message: "Success", comment: newComment.id });
   }
   if (req.method === "GET") {
-    const dummyList = [
-      {
-        id: "c1",
-        name: "Test 1",
-        text: "Comment 1",
-      },
-      {
-        id: "c2",
-        name: "Test 2",
-        text: "Comment 2",
-      },
-    ];
+    const db = client.db();
 
-    res.status(200).json({ comments: dummyList });
+    const documents = await db
+      .collection("comments")
+      .find()
+      .sort({ _id: -1 }) // Sort comments in descending order
+      .toArray();
+
+    res.status(200).json({ comments: documents });
   }
   client.close();
 };

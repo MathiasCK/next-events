@@ -5,10 +5,10 @@ const CommentList = (props) => {
   return (
     <ul className={classes.list}>
       {items.map((item) => (
-        <li key={item.id}>
-          <p>{item.text}</p>
+        <li key={item._id}>
+          <p>{item.userText}</p>
           <div>
-            By <address>{item.name}</address>
+            By <address>{item.userName}</address>
           </div>
         </li>
       ))}
