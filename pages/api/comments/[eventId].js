@@ -1,16 +1,26 @@
-import { MongoClient } from "mongodb";
-
-const url =
-  "mongodb+srv://MathiasCK:Xtrmck123@nextjsevents.gztjm.mongodb.net/events?retryWrites=true&w=majority";
+import {
+  connectDatabase,
+  insertDocument,
+  getAllDocuments,
+} from "../../../utils/db-utils";
 
 const handler = async (req, res) => {
   const eventId = req.query.eventId;
 
-  const client = await MongoClient.connect(url);
+  let client;
+
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    res.status(500).json({
+      message: "Connection to the database failed",
+    });
+    return;
+  }
 
   if (req.method === "POST") {
-    // Add serverside validation
     const { email, name, text } = req.body;
+    // Add serverside validation
 
     if (
       !email.includes("@") ||
@@ -20,42 +30,38 @@ const handler = async (req, res) => {
       text.trim() === ""
     ) {
       res.status(422).json({ message: "Invalid input" });
+      client.close();
       return;
     }
 
     const newComment = {
-      eventId,
-      email,
-      name,
-      text,
-    };
-
-    const db = client.db();
-
-    const result = await db.collection("comments").insertOne({
       event: eventId,
       userEmail: email,
       userName: name,
       userText: text,
-    });
+    };
 
-    console.log(result);
+    let result;
 
-    newComment.id = result.insertedId;
-
-    res.status(201).json({ message: "Success", comment: newComment.id });
+    try {
+      result = await insertDocument(client, "comments", newComment);
+      newComment._id = result.insertedId;
+      res.status(201).json({ message: "Success", comment: newComment.id });
+    } catch (error) {
+      res.status(500).json({ message: "Inserting comment failed" });
+    }
   }
+
   if (req.method === "GET") {
-    const db = client.db();
-
-    const documents = await db
-      .collection("comments")
-      .find()
-      .sort({ _id: -1 }) // Sort comments in descending order
-      .toArray();
-
+    try {
+      const documents = await getAllDocuments(client, "comments", { _id: -1 });
+      res.status(200).json({ comments: documents });
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching comments" });
+    }
     res.status(200).json({ comments: documents });
   }
+
   client.close();
 };
 

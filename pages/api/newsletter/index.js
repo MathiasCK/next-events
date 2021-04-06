@@ -1,7 +1,4 @@
-import { MongoClient } from "mongodb";
-
-const url =
-  "mongodb+srv://MathiasCK:Xtrmck123@nextjsevents.gztjm.mongodb.net/events?retryWrites=true&w=majority";
+import { connectDatabase, insertDocument } from "../../../utils/db-utils";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
@@ -12,14 +9,24 @@ const handler = async (req, res) => {
       return;
     }
 
-    const client = await MongoClient.connect(url);
-    const db = client.db();
+    let client;
 
-    await db.collection("emails").insertOne({
-      userEmail: email,
-    });
+    try {
+      client = await connectDatabase();
+    } catch (error) {
+      res.status(500).json({ message: "Database connection failed!" });
+      return;
+    }
 
-    client.close();
+    try {
+      await insertDocument(client, "newsletter", {
+        userEmail: email,
+      });
+      client.close();
+    } catch (error) {
+      res.status(500).json({ message: "Inserting data failed!" });
+      return;
+    }
 
     res.status(201).json({ message: "Success!" });
   }
