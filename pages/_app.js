@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Layout from "../components/layout/layout";
+import Notification from "../components/ui/notification";
 import "../styles/app.css";
 
 const MyApp = ({ Component, pageProps }) => {
@@ -10,6 +11,7 @@ const MyApp = ({ Component, pageProps }) => {
         <meta name="description" content="NextJS Events" />
       </Head>
       <Component {...pageProps} />
+      <Notification title="Test" message="This is a test" status="pending" />
     </Layout>
   );
 };

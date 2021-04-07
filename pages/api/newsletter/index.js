@@ -9,26 +9,32 @@ const handler = async (req, res) => {
       return;
     }
 
+    console.log("CONNECTING TO CLIENT");
+
     let client;
 
     try {
       client = await connectDatabase();
+      console.log("CONNECTED");
     } catch (error) {
-      res.status(500).json({ message: "Database connection failed!" });
+      console.log(error);
+      res.status(500).json({ message: "Connecting to the database failed!" });
       return;
     }
 
+    console.log("INSERTING DOCUMENT");
     try {
-      await insertDocument(client, "newsletter", {
+      await insertDocument(client, "emails", {
         userEmail: email,
       });
-      client.close();
+      await client.close();
+      res.status(201).json({ message: "Success!" });
     } catch (error) {
       res.status(500).json({ message: "Inserting data failed!" });
       return;
     }
-
-    res.status(201).json({ message: "Success!" });
+  } else {
+    res.status(404).send("Cant get ...");
   }
 };
 

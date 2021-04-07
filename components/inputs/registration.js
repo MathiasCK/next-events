@@ -5,28 +5,27 @@ import classes from "./styles/input.module.css";
 const NewsletterRegistration = () => {
   const inputRef = useRef();
 
-  const registrationHandler = (e) => {
+  const registrationHandler = async (e) => {
     e.preventDefault();
 
     const userInput = inputRef.current.value;
-
-    fetch("/api/newsletter", {
-      method: "POST",
-      body: JSON.stringify({
-        email: userInput,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-
-    // fetch user input (state or refs)
-    // optional: validate input
-    // send valid data to API
-    alert("Signed up!");
-    inputRef.current.value = "";
+    try {
+      const snapshot = await fetch("/api/newsletter/", {
+        method: "POST",
+        body: JSON.stringify({
+          email: userInput,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const response = await snapshot.json();
+      console.log(response);
+      alert("Signed up!");
+      inputRef.current.value = "";
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -34,13 +33,16 @@ const NewsletterRegistration = () => {
       <h2>Sign up to stay updated!</h2>
       <form onSubmit={registrationHandler}>
         <div className={classes.flex}>
-          <input
-            type="email"
-            id="email"
-            placeholder="Your email"
-            aria-label="Your email"
-            ref={inputRef}
-          />
+          <div className={classes.relative}>
+            <input
+              type="email"
+              id="email"
+              placeholder="Your email"
+              aria-label="Your email"
+              ref={inputRef}
+            />
+            <div className={classes.border}></div>
+          </div>
           <Button type="submit">Register</Button>
         </div>
       </form>
