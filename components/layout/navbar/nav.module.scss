@@ -6,12 +6,16 @@
   top: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  display: block;
   padding: 1rem 10%;
   height: 10vh;
+  z-index: 100;
   background-color: white;
+  @media (min-width: 500px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   ul {
     list-style: none;
   }

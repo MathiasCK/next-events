@@ -5,6 +5,7 @@ import Button from "../../components/ui/button/Button";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const FilteredEvents = () => {
   const [loadedEvents, setLoadedEvents] = useState();
@@ -27,13 +28,31 @@ const FilteredEvents = () => {
     }
   }, [data]);
 
+  let pageHeader = (
+    <Head>
+      <title>Filtered events</title>
+      <meta name="description" content="A list of filtered events" />
+    </Head>
+  );
+
   if (!loadedEvents) {
     return (
       <div className="full-page">
+        {pageHeader}
         <p>Loading ...</p>
       </div>
     );
   }
+
+  pageHeader = (
+    <Head>
+      <title>Filtered events</title>
+      <meta
+        name="description"
+        content={`All events for ${numMonth}/${numYear} `}
+      />
+    </Head>
+  );
 
   const filterYear = filterData[0];
   const filterMonth = filterData[1];
@@ -52,6 +71,7 @@ const FilteredEvents = () => {
   ) {
     return (
       <div className="full-page">
+        {pageHeader}
         <p>No events found</p>
         <Button link="/events">Back to all events</Button>
       </div>
@@ -69,6 +89,7 @@ const FilteredEvents = () => {
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <div className="full-page">
+        {pageHeader}
         <p>No events found for the choosen filter</p>
         <Button link="/events">Back to all events</Button>
       </div>
@@ -79,6 +100,7 @@ const FilteredEvents = () => {
 
   return (
     <div>
+      {pageHeader}
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </div>

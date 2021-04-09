@@ -8,6 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "context": "^1.1.1",
+    "fs": "0.0.1-security",
+    "mongodb": "^3.6.6",
     "next": "10.0.9",
     "react": "17.0.1",
     "react-dom": "17.0.1",

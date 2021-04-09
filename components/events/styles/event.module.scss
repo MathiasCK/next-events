@@ -12,7 +12,7 @@
     object-fit: cover;
     height: 10rem;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 500px) {
     flex-direction: row;
     margin: 1rem;
     img {
@@ -112,8 +112,15 @@
     & .control {
       display: flex;
       justify-content: space-between;
+      flex-direction: column;
       align-items: center;
       padding: 1rem 0;
+      @media (min-width: 500px) {
+        flex-direction: row;
+        select {
+          max-width: 200px;
+        }
+      }
       label {
         margin: 0 1rem;
       }
