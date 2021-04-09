@@ -63,12 +63,11 @@ body h1 {
 
 .container p {
   text-align: center;
-  margin: 2rem 0;
 }
 
 .container .image {
-  width: 600px;
-  height: 400px;
+  width: 50%;
+  height: 100%;
   padding: 1rem 0;
 }
 
@@ -79,9 +78,5 @@ body h1 {
      object-fit: cover;
   -webkit-box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
           box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-ul {
-  list-style: none;
 }
 /*# sourceMappingURL=app.css.map */

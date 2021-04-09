@@ -49,11 +49,10 @@ body {
   }
   p {
     text-align: center;
-    margin: 2rem 0;
   }
   & .image {
-    width: 600px;
-    height: 400px;
+    width: 50%;
+    height: 100%;
     padding: 1rem 0;
     img {
       width: 100%;
@@ -62,8 +61,4 @@ body {
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
     }
   }
-}
-
-ul {
-  list-style: none;
 }
